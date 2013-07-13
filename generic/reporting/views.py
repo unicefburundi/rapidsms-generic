@@ -5,7 +5,7 @@ import datetime, time
 from django.shortcuts import get_object_or_404
 from django.utils import simplejson
 from django.http import HttpResponse
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, include, url
 
 GROUP_BY_WEEK = 1
 GROUP_BY_MONTH = 2
