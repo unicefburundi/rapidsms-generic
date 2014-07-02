@@ -64,7 +64,7 @@
         {% endif %}
         {% endblock %}
     </form>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% block actions %}
         {% if action_forms|length > 0 %}
