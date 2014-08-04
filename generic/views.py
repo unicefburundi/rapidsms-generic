@@ -16,6 +16,7 @@ from generic.models import Dashboard, Module, ModuleParams, StaticModuleContent
 from django.db.models import Count
 from django.views.decorators.cache import cache_control
 from .utils import copy_dashboard, get_dates, set_default_dates,paginate
+from uganda_common.utils import ExcelResults
 
 def generic_row(request, model=None, pk=None, partial_row='generic/partials/partial_row.html', selectable=True):
     if not (model and pk):
@@ -164,6 +165,8 @@ def generic(request,
             # store the request filters in the session
             request.session[FILTER_REQUEST_KEY] = request.POST
 
+        file_output_name = "%d_exported_results.xlsx" %(request.user.id)
+        ExcelResults(data=filtered_list.values(), output_name=file_output_name, write_to_file = True)
         response_template = partial_base
     else:
         # reset the filter key, if there was a previous one it should be
