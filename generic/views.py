@@ -18,6 +18,8 @@ from django.views.decorators.cache import cache_control
 from .utils import copy_dashboard, get_dates, set_default_dates,paginate
 from uganda_common.utils import ExcelResults
 
+from django.contrib.auth.models import Group
+
 def generic_row(request, model=None, pk=None, partial_row='generic/partials/partial_row.html', selectable=True):
     if not (model and pk):
         return HttpResponseServerError
@@ -190,6 +192,24 @@ def generic(request,
        else:
            paginator_dict=paginator_func(filtered_list,objects_per_page,page,p)
 
+
+    print("=======")
+
+    group_statistics = list()
+    try:
+        if filtered_list[0].group:
+            for group in Group.objects.all():
+                number = filtered_list.filter(group=group).count();
+                if number != 0:
+                    small_list = [str(group.name),number]
+                    group_statistics.append(small_list)
+        print(group_statistics)
+    except:
+        print("An exception in generic ....")
+    
+    print("=======")
+
+
     context_vars = {
         'partial_base':partial_base,
         'partial_header':partial_header,
@@ -214,6 +234,7 @@ def generic(request,
         'status_message':status_message,
         'status_message_type':status_message_type,
         'base_template':'layout.html',
+        'group_statistics':group_statistics,
     }
     context_vars.update(paginator_dict)
 
