@@ -73,7 +73,7 @@ def generic(request,
     p = None
     action_form_instances = []
     for action_class in action_forms:
-        form_instance = action_class(**{'request':request})
+        form_instance = action_class(**{'request': request})
         fully_qualified_class_name = "%s.%s" % (form_instance.__module__, form_instance.__class__.__name__)
         # we need both a dictionary of action forms (for looking up actions performed)
         # and a list of tuple for rendering within the template in a particular order
@@ -82,7 +82,7 @@ def generic(request,
 
     filter_form_instances = []
     for filter_class in filter_forms:
-        form_instance = filter_class(**{'request':request})
+        form_instance = filter_class(**{'request': request})
         filter_form_instances.append(form_instance)
 
     # define some defaults
@@ -203,10 +203,12 @@ def generic(request,
                 if number != 0:
                     small_list = [str(group.name),number]
                     group_statistics.append(small_list)
+            nogroup = ["No Group", filtered_list.filter(group__isnull=True).count()]
+            group_statistics.append(nogroup)
         print(group_statistics)
     except:
         print("An exception in generic ....")
-    
+
     print("=======")
 
 
