@@ -167,8 +167,8 @@ def generic(request,
             # store the request filters in the session
             request.session[FILTER_REQUEST_KEY] = request.POST
 
-        file_output_name = "%d_exported_results.xlsx" %(request.user.id)
-        ExcelResults(data=filtered_list.values(), output_name=file_output_name, write_to_file = True)
+        #file_output_name = "%d_exported_results.xlsx" %(request.user.id)
+        #ExcelResults(data=filtered_list.values(), output_name=file_output_name, write_to_file = True)
         response_template = partial_base
     else:
         # reset the filter key, if there was a previous one it should be
@@ -204,9 +204,10 @@ def generic(request,
                     small_list = [str(group.name),number]
                     group_statistics.append(small_list)
         print(group_statistics)
+        #print(filtered_list.all().count())
     except:
         print("An exception in generic ....")
-    
+    #import ipdb; ipdb.set_trace();
     print("=======")
 
 
