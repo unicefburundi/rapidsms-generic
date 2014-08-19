@@ -100,6 +100,7 @@ def generic(request,
         # check for previous filters in the case of a post,
         # as other actions will be driven from this
         # filtered list
+        import ipdb; ipdb.set_trace()
         filter_request_post = request.session.setdefault(FILTER_REQUEST_KEY, None)
         if filter_request_post:
             for form_class in filter_forms:
@@ -166,9 +167,6 @@ def generic(request,
             selected = True
             # store the request filters in the session
             request.session[FILTER_REQUEST_KEY] = request.POST
-
-        file_output_name = "%d_exported_results.xlsx" %(request.user.id)
-        ExcelResults(data=filtered_list.values(), output_name=file_output_name, write_to_file = True)
         response_template = partial_base
     else:
         # reset the filter key, if there was a previous one it should be
