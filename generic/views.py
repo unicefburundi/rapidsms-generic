@@ -192,7 +192,6 @@ def generic(request,
                     group_statistics.append(small_list)
             nogroup = ["No Group", filtered_list.filter(group__isnull=True).count()]
             group_statistics.append(nogroup)
-        print(group_statistics)
     except:
         print("An exception in generic ....")
 
