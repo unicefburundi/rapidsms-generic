@@ -2,22 +2,14 @@
 # vim: ai ts=4 sts=4 et sw=4
 
 
-import datetime
-import time
-
-from django.db.models.query import RawQuerySet, RawQuerySet
 from django.template import RequestContext
-from django.shortcuts import redirect, get_object_or_404, render_to_response
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.http import Http404, HttpResponseServerError, HttpResponseRedirect, HttpResponse
+from django.shortcuts import  get_object_or_404, render_to_response
+from django.http import HttpResponseServerError,  HttpResponse
 from django import forms
 from django.contrib.auth.models import User
-from generic.models import Dashboard, Module, ModuleParams, StaticModuleContent
-from django.db.models import Count
+from generic.models import Dashboard, Module, StaticModuleContent
 from django.views.decorators.cache import cache_control
 from .utils import copy_dashboard, get_dates, set_default_dates,paginate
-from uganda_common.utils import ExcelResults
-
 from django.contrib.auth.models import Group
 
 def generic_row(request, model=None, pk=None, partial_row='generic/partials/partial_row.html', selectable=True):
@@ -100,7 +92,6 @@ def generic(request,
         # check for previous filters in the case of a post,
         # as other actions will be driven from this
         # filtered list
-        import ipdb; ipdb.set_trace()
         filter_request_post = request.session.setdefault(FILTER_REQUEST_KEY, None)
         if filter_request_post:
             for form_class in filter_forms:
@@ -191,8 +182,6 @@ def generic(request,
            paginator_dict=paginator_func(filtered_list,objects_per_page,page,p)
 
 
-    print("=======")
-
     group_statistics = list()
     try:
         if filtered_list[0].group:
@@ -206,8 +195,6 @@ def generic(request,
         print(group_statistics)
     except:
         print("An exception in generic ....")
-
-    print("=======")
 
 
     context_vars = {
